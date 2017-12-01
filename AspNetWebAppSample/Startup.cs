@@ -29,12 +29,8 @@ namespace AspNetWebAppSample
 
             InyectorStartup.Init(c =>
             {
-                c.AddAssemblyRule(typeof(Startup).Assembly,
-                    (t1, t2) =>
-                    {
-                        return $"I{t1.Name}" == t2.Name;
-                    },
-                    (t1, t2) => services.AddSingleton(t2, t1));
+                c.Scan(typeof(Startup).Assembly)
+                    .AddRuleForNamingConvention((type, interf) => services.AddSingleton(interf, type));
             });
         }
 
