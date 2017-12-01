@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetWebAppSample", "AspNe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Inyector", "Inyector\Inyector.csproj", "{D3295D90-F956-4AA2-9ADB-A932CFA1117D}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Inyector.AspNetCore", "Inyector.AspNetCore\Inyector.AspNetCore.csproj", "{FCA731C9-7F4A-44DD-B95D-18AA6010BAE1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{D3295D90-F956-4AA2-9ADB-A932CFA1117D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D3295D90-F956-4AA2-9ADB-A932CFA1117D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D3295D90-F956-4AA2-9ADB-A932CFA1117D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FCA731C9-7F4A-44DD-B95D-18AA6010BAE1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FCA731C9-7F4A-44DD-B95D-18AA6010BAE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FCA731C9-7F4A-44DD-B95D-18AA6010BAE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FCA731C9-7F4A-44DD-B95D-18AA6010BAE1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -34,6 +40,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{7868FF24-90AB-4B43-83F0-664CAE8DA932} = {AA2AE3AE-49E0-4186-A87F-0296B8EE3C36}
 		{D3295D90-F956-4AA2-9ADB-A932CFA1117D} = {9ABAEFCB-D23A-4A65-B89A-CEAB986ABB95}
+		{FCA731C9-7F4A-44DD-B95D-18AA6010BAE1} = {9ABAEFCB-D23A-4A65-B89A-CEAB986ABB95}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5C765209-3112-45D1-9F4E-464C5FC081C7}
