@@ -22,17 +22,17 @@ paket add Inyector --version 0.1.1
 
 ### How to use
            *  Scan (You declare the assemblies to execute Inyector)
-           ```c#
+```c#
            c.Scan(typeof(Startup).Assembly)
-           ```
+```    
            
            * Modes 
            (The way to declare inyection engine without repeat code,
            you define a Mode with name an with an action that get both types)
            
-           ```c#
+```c#
            c.AddMode("MyCustomMode", (type, interf) => services.AddScoped(interf, type));
-           ```
+```    
            
            * Rules
             You can apply any rule in an assembly or in all the shared scaned assemblies
@@ -51,20 +51,19 @@ paket add Inyector --version 0.1.1
            with this attribute you can declare what object Inyector should auto-inyect
            You set the Interface and the Mode, if not Default will the mode (if exist) that apply to this Attribute
            
-             ```c#
-
+```c#
                [Inyect(typeof(IFooHelper))]
                public class CarHelper : IFooHelper
                {
                }
-            ```
+```    
             
-            ```c#
+```c#
                [Inyect(typeof(IFooHelper), mode : "MyCustomMode")]
                public class CarHelper : IFooHelper
                {
                }
-            ```    
+```    
 
 #### AspNetCore
 
