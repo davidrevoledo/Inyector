@@ -21,11 +21,54 @@ paket add Inyector --version 0.1.1
 ```
 
 ### How to use
-           - Scan (You declare the assemblies to execute Inyector)
+           *  Scan (You declare the assemblies to execute Inyector)
+           ```c#
+           c.Scan(typeof(Startup).Assembly)
+           ```
            
-           - Modes (The way to declare inyection engine without repeat code, you can have many modes as you want with a Name and a    action of how to resolve inyection)
+           * Modes 
+           (The way to declare inyection engine without repeat code, you define a Mode with name an with an action that get both types)
+           
+           ```c#
+           c.AddMode("MyCustomMode", (type, interf) => services.AddScoped(interf, type));
+           ```
+           
+           * Rules
+            You can apply any rule in an assembly or in all the shared scaned assemblies
+           
+           ** AddRuleForNamingConvention
+           (You can auto-inyect all the objects that have the convention of Class and IClass (Interface) )
+            
+           ** AddRuleForEndsWithNamingConvention
+           (You can auto-inyect all the objects that finish with a list of key values like "Helper" and "Factory" then
+           if you have FooFactory and IFoo2Factory they can be auto-inyected)
+           
+           * AvoidInyectorAttribute you can avoid to apply any Inyector Rule
+           with this attribute
+           
+           * InyectAttribute 
+           with this attribute you can declare what object Inyector should auto-inyect
+           You set the Interface and the Mode, if not Default will the mode (if exist) that apply to this Attribute
+           
+             ```c#
+
+               [Inyect(typeof(IFooHelper))]
+               public class CarHelper : IFooHelper
+               {
+               }
+            ```
+            
+            ```c#
+               [Inyect(typeof(IFooHelper), mode : "MyCustomMode")]
+               public class CarHelper : IFooHelper
+               {
+               }
+            ```    
 
 #### AspNetCore
+
+With AspNet core you can avoid to configure modes, using the ServiceLifetime Enum to apply pre-builded Modes,
+Also you can define your owns.
 
 ```c#
         // This method gets called by the runtime. Use this method to add services to the container.
