@@ -8,8 +8,6 @@ It is simply an abstraction layer to configure our objects no matter what techno
 
 You can use Injector with your favorite libraries like Asp.Net Core DI, Autofac, Ninject and others ...
 
-
-[![Build status](https://ci.appveyor.com/api/projects/status/j7f6vfv3s4nwwak6?svg=true)](https://ci.appveyor.com/project/davidrevoledo/inyector)
 [![CodeFactor](https://www.codefactor.io/repository/github/davidrevoledo/inyector/badge)](https://www.codefactor.io/repository/github/davidrevoledo/inyector)
 
 ### Installation
@@ -67,6 +65,10 @@ paket add Inyector --version 0.1.1
 ```    
 
 #### AspNetCore
+```sh
+PM > Install-Package Inyector-AspNetCore 	
+NET CLI - dotnet add package Inyector-AspNetCore 
+```
 
 With AspNet core you can avoid to configure modes, using the ServiceLifetime Enum to apply pre-builded Modes,
 Also you can define your owns.
