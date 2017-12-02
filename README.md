@@ -27,7 +27,8 @@ paket add Inyector --version 0.1.1
            ```
            
            * Modes 
-           (The way to declare inyection engine without repeat code, you define a Mode with name an with an action that get both types)
+           (The way to declare inyection engine without repeat code,
+           you define a Mode with name an with an action that get both types)
            
            ```c#
            c.AddMode("MyCustomMode", (type, interf) => services.AddScoped(interf, type));
