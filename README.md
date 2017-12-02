@@ -20,7 +20,28 @@ NET CLI - dotnet add package Inyector
 paket add Inyector --version 0.1.1	
 ```
 
-### Usage
+### How to use
+           - Scan (You declare the assemblies to execute Inyector)
+           
+           - Modes (The way to declare inyection engine without repeat code, you can have many modes as you want with a Name and a    action of how to resolve inyection)
+
+#### AspNetCore
+
+```c#
+        // This method gets called by the runtime. Use this method to add services to the container.
+        public void ConfigureServices(IServiceCollection services)
+        {
+            services.AddMvc();
+
+            // use injector
+            services.UseInjector(configurations =>
+            {
+                configurations.Scan(typeof(Startup).Assembly)
+                    .DefaultMode(services, ServiceLifetime.Singleton)
+                    .AddRuleForNamingConvention(ServiceLifetime.Singleton);
+            });
+        }
+```
 
 #### Raw
 To use injector directly you should call the ```C# InyectorStartup ``` class like this :
@@ -32,12 +53,6 @@ InyectorStartup.Init(c =>
                     .AddRule((type, inter)=> services.RegisterType(inter, type));
             });
 ```
-
-```C# Init ``` methods take as param an action delegate with a Inyector Configurations to apply your custom configurations.
-What options do you have here ? 
-
-
-
 
 
 
