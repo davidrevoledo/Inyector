@@ -36,11 +36,12 @@ paket add Inyector --version 0.1.1
            
            - Rules
             You can apply any rule in an assembly or in all the shared scaned assemblies
+            You can create your custom rules as well.
            
-           > AddRuleForNamingConvention
+           - AddRuleForNamingConvention
            (You can auto-inyect all the objects that have the convention of Class and IClass (Interface) )
             
-           > AddRuleForEndsWithNamingConvention
+          -  AddRuleForEndsWithNamingConvention
            (You can auto-inyect all the objects that finish with a list of key values like "Helper" and "Factory" then
            if you have FooFactory and IFoo2Factory they can be auto-inyected)
            
