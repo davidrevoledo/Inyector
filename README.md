@@ -2,7 +2,7 @@
 
 What is Injector?
 
-Injector is a library for auto configure our dependencies regardless of the technology we use, that is, it is not a dependency injection engine.
+Injector is a library for auto configure our dependencies regardless of the technology we use, that is, ***it is not*** a dependency injection engine.
 
 It is simply an abstraction layer to configure our objects no matter what technology we use as an injection engine.
 
