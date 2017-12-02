@@ -22,34 +22,27 @@
     // Project Lead - David Revoledo davidrevoledo@d-genix.com
  */
 
-using System;
+using Inyector.AspNetCore;
 using Inyector.Configurations;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Inyector
 {
-    /// <summary>
-    ///     Inyector Startup
-    /// </summary>
-    public static class InyectorStartup
+    public static class ModeExtensions
     {
         /// <summary>
-        ///     Init Inyector
+        ///     Add Default Mode for a ServiceLifeTime
         /// </summary>
-        /// <param name="action">the method to configure the inyector </param>
-        public static void Init(Action<InyectorConfiguration> action)
+        /// <param name="configuarations"></param>
+        /// <param name="services"></param>
+        /// <param name="lifetime"></param>
+        /// <returns>a instance of IInyectorConfiguration</returns>
+        public static InyectorConfiguration DefaultMode(this InyectorConfiguration configuarations,
+            IServiceCollection services,
+            ServiceLifetime lifetime)
         {
-            var configuration = new InyectorConfiguration();
-
-            action.Invoke(configuration);
-
-            // init the context
-            InyectorContext.Assemblies = configuration.Assemblies;
-            foreach (var mode in configuration.Modes)
-            {
-                InyectorContext.Modes[mode.Name] = mode;
-            }
-
-            InyectorEngine.Proccess(configuration);
+            configuarations.DefaultMode(AspNetCoreModeFactory.Create(lifetime, services).InyectorMethod);
+            return configuarations;
         }
     }
 }

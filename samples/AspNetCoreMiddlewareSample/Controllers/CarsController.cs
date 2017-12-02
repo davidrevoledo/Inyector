@@ -1,8 +1,8 @@
-﻿using AspNetWebAppSample.Helpers;
-using AspNetWebAppSample.Repositories;
+﻿using AspNetCoreMiddlewareSample.Helpers;
+using AspNetCoreMiddlewareSample.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AspNetWebAppSample.Controllers
+namespace AspNetCoreMiddlewareSample.Controllers
 {
     [Route("api/[controller]")]
     public class CarsController : Controller

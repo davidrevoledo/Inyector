@@ -1,10 +1,11 @@
 ﻿using Inyector;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace AspNetWebAppSample
+namespace AspNetCoreMiddlewareSample
 {
     public class Startup
     {
@@ -20,17 +21,12 @@ namespace AspNetWebAppSample
         {
             services.AddMvc();
 
-            InyectorStartup.Init(c =>
+            // use injector
+            services.UseInjector(configurations =>
             {
-                c.DefaultMode((type, interf) => services.AddSingleton(interf, type));
-                c.AddMode("MyCustomMode", (type, interf) => services.AddScoped(interf, type));
-
-                //c.Scan(typeof(Startup).Assembly)
-                //    .AddRuleForNamingConvention((type, interf) => services.AddSingleton(interf, type));
-
-                c.Scan(typeof(Startup).Assembly)
-                    .AddRuleForNamingConvention(Mode.DefaultMode)
-                    .AddRuleForEndsWithNamingConvention(new[] {"Helper", "Services", "Foo"}, "MyCustomMode");
+                configurations.Scan(typeof(Startup).Assembly)
+                    .DefaultMode(services, ServiceLifetime.Singleton)
+                    .AddRuleForNamingConvention(ServiceLifetime.Singleton);
             });
         }
 

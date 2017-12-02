@@ -23,33 +23,39 @@
  */
 
 using System;
-using Inyector.Configurations;
 
-namespace Inyector
+namespace Inyector.Attributes
 {
     /// <summary>
-    ///     Inyector Startup
+    ///     Attribute to define the Abstract class to be auto implemented
+    ///     How to implement the Inyection is defined by Inyector Modes, "Default" is the default mode.
+    ///     If no mode is implemented then the Engine won't do nothing
     /// </summary>
-    public static class InyectorStartup
+    [AttributeUsage(AttributeTargets.Class)]
+    public class InyectAttribute : Attribute
     {
         /// <summary>
-        ///     Init Inyector
+        ///     Constructor with default mode
         /// </summary>
-        /// <param name="action">the method to configure the inyector </param>
-        public static void Init(Action<InyectorConfiguration> action)
+        /// <param name="abstractType">the type of the interface</param>
+        public InyectAttribute(Type abstractType)
         {
-            var configuration = new InyectorConfiguration();
-
-            action.Invoke(configuration);
-
-            // init the context
-            InyectorContext.Assemblies = configuration.Assemblies;
-            foreach (var mode in configuration.Modes)
-            {
-                InyectorContext.Modes[mode.Name] = mode;
-            }
-
-            InyectorEngine.Proccess(configuration);
+            AbstractType = abstractType;
         }
+
+        /// <summary>
+        ///     Constructor with declared mode
+        /// </summary>
+        /// <param name="abstractType">the type of the interface</param>
+        /// <param name="mode">the inyector mode</param>
+        public InyectAttribute(Type abstractType, string mode)
+            : this(abstractType)
+        {
+            Mode = mode;
+        }
+
+        public string Mode { get; }
+
+        public Type AbstractType { get; }
     }
 }

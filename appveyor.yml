@@ -1,0 +1,9 @@
+version: 1.0.{build}
+notifications:
+- provider: Email
+  to:
+  - davidrevoledo@d-genix.com
+  subject: '[AppVeyor] - Inyector'
+  on_build_success: false
+  on_build_failure: true
+  on_build_status_changed: true

@@ -23,33 +23,37 @@
  */
 
 using System;
-using Inyector.Configurations;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 
 namespace Inyector
 {
     /// <summary>
-    ///     Inyector Startup
+    ///     Inyector Context
     /// </summary>
-    public static class InyectorStartup
+    public static class InyectorContext
     {
         /// <summary>
-        ///     Init Inyector
+        ///     Shared Assemblies
         /// </summary>
-        /// <param name="action">the method to configure the inyector </param>
-        public static void Init(Action<InyectorConfiguration> action)
-        {
-            var configuration = new InyectorConfiguration();
+        internal static List<Assembly> Assemblies = new List<Assembly>();
 
-            action.Invoke(configuration);
+        /// <summary>
+        ///     Shared Modes
+        /// </summary>
+        internal static Dictionary<string, Mode> Modes = new Dictionary<string, Mode>();
 
-            // init the context
-            InyectorContext.Assemblies = configuration.Assemblies;
-            foreach (var mode in configuration.Modes)
-            {
-                InyectorContext.Modes[mode.Name] = mode;
-            }
+        /// <summary>
+        ///     Lazy All Cached Assembly types
+        /// </summary>
+        private static readonly Lazy<IEnumerable<Type>> LazyTypes = new Lazy<IEnumerable<Type>>(() => Assemblies
+            .SelectMany(t => t.GetTypes())
+            .Distinct());
 
-            InyectorEngine.Proccess(configuration);
-        }
+        /// <summary>
+        ///     Public Types from Shared Assemblies
+        /// </summary>
+        internal static IEnumerable<Type> ScanedTypes => LazyTypes.Value;
     }
 }

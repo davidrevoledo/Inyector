@@ -22,34 +22,32 @@
     // Project Lead - David Revoledo davidrevoledo@d-genix.com
  */
 
+
 using System;
-using Inyector.Configurations;
 
 namespace Inyector
 {
     /// <summary>
-    ///     Inyector Startup
+    ///     Inyector Mode
     /// </summary>
-    public static class InyectorStartup
+    public class Mode
     {
         /// <summary>
-        ///     Init Inyector
+        ///     Default Mode Key
         /// </summary>
-        /// <param name="action">the method to configure the inyector </param>
-        public static void Init(Action<InyectorConfiguration> action)
-        {
-            var configuration = new InyectorConfiguration();
+        public const string DefaultMode = "Default";
 
-            action.Invoke(configuration);
+        /// <summary>
+        ///     Mode Key
+        /// </summary>
+        public string Name { get; set; }
 
-            // init the context
-            InyectorContext.Assemblies = configuration.Assemblies;
-            foreach (var mode in configuration.Modes)
-            {
-                InyectorContext.Modes[mode.Name] = mode;
-            }
 
-            InyectorEngine.Proccess(configuration);
-        }
+        /// <summary>
+        ///     Action Delegate to execute the inyection engine
+        ///     the first param is the implementation and the
+        ///     second is the interface
+        /// </summary>
+        public Action<Type, Type> InyectorMethod { get; set; }
     }
 }

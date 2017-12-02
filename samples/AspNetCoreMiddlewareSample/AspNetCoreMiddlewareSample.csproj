@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\Inyector.AspNetCore\Inyector.AspNetCore.csproj" />
     <ProjectReference Include="..\..\src\Inyector\Inyector.csproj" />
   </ItemGroup>
 

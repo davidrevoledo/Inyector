@@ -1,25 +1,30 @@
 ﻿using System;
-using Inyector.AspNetCore.Configurations;
 using Microsoft.Extensions.DependencyInjection;
+using Inyector.Configurations;
+using Inyector;
+using Inyector.AspNetCore;
 
-// ReSharper disable once CheckNamespace
 namespace Microsoft.Extensions
 {
+    /// <summary>
+    /// AspNet Core Service Extension
+    /// </summary>
     public static class InyectorExtensions
     {
         public static IServiceCollection UseInjector(this IServiceCollection services,
-            Action<InyectorConfigurations> configurationAction)
+            Action<InyectorConfiguration> configurationAction)
         {
-            var configurations = new InyectorConfigurations();
 
-            configurationAction.Invoke(configurations);
+            // Call Inyector Startup
+            InyectorStartup.Init((c) =>
+            {
+                // add default modes
+                c.AddMode(AspNetCoreModeFactory.Create(ServiceLifetime.Scoped, services))
+                    .AddMode(AspNetCoreModeFactory.Create(ServiceLifetime.Singleton, services))
+                    .AddMode(AspNetCoreModeFactory.Create(ServiceLifetime.Transient, services));
 
-            var context = InyectorContextFactory.Init(services);
-
-            foreach (var rule in configurations.Rules)
-                context.AddRule(rule);
-
-            context.Proccess();
+                configurationAction.Invoke(c);
+            });
 
             return services;
         }
