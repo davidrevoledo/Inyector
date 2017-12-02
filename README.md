@@ -21,12 +21,12 @@ paket add Inyector --version 0.1.1
 ```
 
 ### How to use
-           *  Scan (You declare the assemblies to execute Inyector)
+           -  Scan (You declare the assemblies to execute Inyector)
 ```c#
            c.Scan(typeof(Startup).Assembly)
 ```    
            
-           * Modes 
+           - Modes 
            (The way to declare inyection engine without repeat code,
            you define a Mode with name an with an action that get both types)
            
@@ -34,20 +34,20 @@ paket add Inyector --version 0.1.1
            c.AddMode("MyCustomMode", (type, interf) => services.AddScoped(interf, type));
 ```    
            
-           * Rules
+           - Rules
             You can apply any rule in an assembly or in all the shared scaned assemblies
            
-           ** AddRuleForNamingConvention
+           > AddRuleForNamingConvention
            (You can auto-inyect all the objects that have the convention of Class and IClass (Interface) )
             
-           ** AddRuleForEndsWithNamingConvention
+           > AddRuleForEndsWithNamingConvention
            (You can auto-inyect all the objects that finish with a list of key values like "Helper" and "Factory" then
            if you have FooFactory and IFoo2Factory they can be auto-inyected)
            
-           * AvoidInyectorAttribute you can avoid to apply any Inyector Rule
+           - AvoidInyectorAttribute you can avoid to apply any Inyector Rule
            with this attribute
            
-           * InyectAttribute 
+           - InyectAttribute 
            with this attribute you can declare what object Inyector should auto-inyect
            You set the Interface and the Mode, if not Default will the mode (if exist) that apply to this Attribute
            
