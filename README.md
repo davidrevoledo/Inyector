@@ -2,6 +2,8 @@
 
 [![Build status](https://ci.appveyor.com/api/projects/status/j7f6vfv3s4nwwak6?svg=true)](https://ci.appveyor.com/project/davidrevoledo/inyector)
 
+[![CodeFactor](https://www.codefactor.io/repository/github/davidrevoledo/inyector/badge)](https://www.codefactor.io/repository/github/davidrevoledo/inyector)
+
 ### Installation
 Grab the latest Inyector NuGet package and install in your solution. https://www.nuget.org/packages/Inyector/
 ```sh
