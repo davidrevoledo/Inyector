@@ -23,17 +23,17 @@ paket add Inyector --version 0.1.1
 ### Usage
 
 #### Raw
-To use injector directly you should call the 'C# InyectorStartup ' class like this :
-'''c#
+To use injector directly you should call the ```C# InyectorStartup ``` class like this :
+```c#
 InyectorStartup.Init(c =>
             {
                 c.Scan(typeof(AnyClass).Assembly)
                     .AddRuleForNamingConvention((type, interf) => services.AddSingleton(interf, type))
                     .AddRule((type, inter)=> services.RegisterType(inter, type));
             });
-'''
+```
 
-'C# Init ' methods take as param an action delegate with a Inyector Configurations to apply your custom configurations.
+```C# Init ``` methods take as param an action delegate with a Inyector Configurations to apply your custom configurations.
 What options do you have here ? 
 
 
