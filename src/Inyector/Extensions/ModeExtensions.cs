@@ -61,15 +61,30 @@ namespace Inyector
         ///     second is the interface
         /// </param>
         /// <returns>a instance of IInyectorConfiguration</returns>
-        public static InyectorConfiguration DefaultMode(this InyectorConfiguration configuarations,
+        public static InyectorConfiguration AddMode(this InyectorConfiguration configuarations,
             string name,
             Action<Type, Type> inyectorMethod)
         {
-            configuarations.Modes.Add(new Mode
+            AddMode(configuarations, new Mode
             {
                 Name = name,
                 InyectorMethod = inyectorMethod
             });
+
+            return configuarations;
+        }
+
+
+        /// <summary>
+        ///     Add Default Mode
+        /// </summary>
+        /// <param name="configuarations"></param>
+        /// <param name="mode">Mode instance</param>
+        /// <returns>a instance of IInyectorConfiguration</returns>
+        public static InyectorConfiguration AddMode(this InyectorConfiguration configuarations,
+            Mode mode)
+        {
+            configuarations.Modes.Add(mode);
 
             return configuarations;
         }

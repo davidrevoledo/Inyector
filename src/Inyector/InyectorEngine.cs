@@ -114,7 +114,13 @@ namespace Inyector
                         continue;
 
                     // find method or mode to execute the inyection
-                    var method = rule.InyectorMethod ?? InyectorContext.Modes[rule.InyectorMode]?.InyectorMethod;
+                    var method = rule.InyectorMethod;
+
+                    if (method == null)
+                    {
+                        InyectorContext.Modes.TryGetValue(rule.InyectorMode, out Mode mode);
+                        method = mode?.InyectorMethod;
+                    }
 
                     method?.Invoke(candidate, @interface);
                 }

@@ -22,35 +22,27 @@
     // Project Lead - David Revoledo davidrevoledo@d-genix.com
  */
 
-using System;
-using System.Reflection;
+using Inyector.AspNetCore;
+using Inyector.Configurations;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Inyector
 {
-    /// <summary>
-    ///     Inyector Rule
-    /// </summary>
-    public class Rule
+    public static class ModeExtensions
     {
         /// <summary>
-        ///     Optional Assembly to apply the rule
+        ///     Add Default Mode for a ServiceLifeTime
         /// </summary>
-        public Assembly Assembly { get; set; }
-
-        /// <summary>
-        ///     Criteria To Check if a type should implement the other
-        /// </summary>
-        public Func<Type, Type, bool> Criteria { get; set; }
-
-        /// <summary>
-        ///     Action Delegate to execute the inyection engine
-        /// </summary>
-        public Action<Type, Type> InyectorMethod { get; set; }
-
-        /// <summary>
-        ///     Instead of configure the delegate you can use this property to configure the mode to use
-        ///     the InyectorMethod has Priority over this configuration
-        /// </summary>
-        public string InyectorMode { get; set; }
+        /// <param name="configuarations"></param>
+        /// <param name="services"></param>
+        /// <param name="lifetime"></param>
+        /// <returns>a instance of IInyectorConfiguration</returns>
+        public static InyectorConfiguration DefaultMode(this InyectorConfiguration configuarations,
+            IServiceCollection services,
+            ServiceLifetime lifetime)
+        {
+            configuarations.DefaultMode(AspNetCoreModeFactory.Create(lifetime, services).InyectorMethod);
+            return configuarations;
+        }
     }
 }
