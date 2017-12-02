@@ -32,6 +32,7 @@ namespace Inyector.Configurations
     {
         internal List<Assembly> Assemblies = new List<Assembly>();
         internal List<Rule> Rules { get; set; } = new List<Rule>();
+        internal List<Mode> Modes { get; set; } = new List<Mode>();
 
         /// <summary>
         ///     Add New Rule with target assembly
@@ -76,6 +77,45 @@ namespace Inyector.Configurations
             Action<Type, Type> inyectorMethod)
         {
             return AddRule(null, criteria, inyectorMethod);
+        }
+
+        /// <summary>
+        ///     Add New Rule with target assembly and a preconfigured mode
+        /// </summary>
+        /// <param name="assembly">Assembly to apply rule</param>
+        /// <param name="criteria">
+        ///     Criteria to is the func to check if a type match to other to be implemented the first param is
+        ///     the implementation and the second is the interface
+        /// </param>
+        /// <param name="mode"> Mode to use to execute the inyection </param>
+        /// <returns>a instance of IInyectorConfiguration</returns>
+        public InyectorConfiguration AddRule(Assembly assembly,
+            Func<Type, Type, bool> criteria,
+            string mode)
+        {
+            Rules.Add(new Rule
+            {
+                Assembly = assembly,
+                Criteria = criteria,
+                InyectorMode = mode
+            });
+
+            return this;
+        }
+
+        /// <summary>
+        ///     Add New Rule with a preconfigured mode
+        /// </summary>
+        /// <param name="criteria">
+        ///     Criteria to is the func to check if a type match to other to be implemented the first param is
+        ///     the implementation and the second is the interface
+        /// </param>
+        /// <param name="mode"> Mode to use to execute the inyection </param>
+        /// <returns>a instance of IInyectorConfiguration</returns>
+        public InyectorConfiguration AddRule(Func<Type, Type, bool> criteria,
+            string mode)
+        {
+            return AddRule(null, criteria, mode);
         }
 
         /// <summary>

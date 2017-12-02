@@ -23,33 +23,34 @@
  */
 
 using System;
-using Inyector.Configurations;
+using System.Reflection;
 
 namespace Inyector
 {
     /// <summary>
-    ///     Inyector Startup
+    ///     Inyector Rule
     /// </summary>
-    public static class InyectorStartup
+    internal class Rule
     {
         /// <summary>
-        ///     Init Inyector
+        ///     Optional Assembly to apply the rule
         /// </summary>
-        /// <param name="action">the method to configure the inyector </param>
-        public static void Init(Action<InyectorConfiguration> action)
-        {
-            var configuration = new InyectorConfiguration();
+        public Assembly Assembly { get; set; }
 
-            action.Invoke(configuration);
+        /// <summary>
+        ///     Criteria To Check if a type should implement the other
+        /// </summary>
+        public Func<Type, Type, bool> Criteria { get; set; }
 
-            // init the context
-            InyectorContext.Assemblies = configuration.Assemblies;
-            foreach (var mode in configuration.Modes)
-            {
-                InyectorContext.Modes[mode.Name] = mode;
-            }
+        /// <summary>
+        ///     Action Delegate to execute the inyection engine
+        /// </summary>
+        public Action<Type, Type> InyectorMethod { get; set; }
 
-            InyectorEngine.Proccess(configuration);
-        }
+        /// <summary>
+        ///     Instead of configure the delegate you can use this property to configure the mode to use
+        ///     the InyectorMethod has Priority over this configuration
+        /// </summary>
+        public string InyectorMode { get; set; }
     }
 }

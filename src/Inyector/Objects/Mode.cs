@@ -22,17 +22,32 @@
     // Project Lead - David Revoledo davidrevoledo@d-genix.com
  */
 
+
 using System;
-using System.Reflection;
 
 namespace Inyector
 {
-    internal class Rule
+    /// <summary>
+    ///     Inyector Mode
+    /// </summary>
+    public class Mode
     {
-        public Assembly Assembly { get; set; }
+        /// <summary>
+        ///     Default Mode Key
+        /// </summary>
+        public const string DefaultMode = "Default";
 
-        public Func<Type, Type, bool> Criteria { get; set; }
+        /// <summary>
+        ///     Mode Key
+        /// </summary>
+        public string Name { get; set; }
 
+
+        /// <summary>
+        ///     Action Delegate to execute the inyection engine
+        ///     the first param is the implementation and the
+        ///     second is the interface
+        /// </summary>
         public Action<Type, Type> InyectorMethod { get; set; }
     }
 }

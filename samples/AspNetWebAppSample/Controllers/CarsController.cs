@@ -1,4 +1,5 @@
-﻿using AspNetWebAppSample.Repositories;
+﻿using AspNetWebAppSample.Helpers;
+using AspNetWebAppSample.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AspNetWebAppSample.Controllers
@@ -7,10 +8,13 @@ namespace AspNetWebAppSample.Controllers
     public class CarsController : Controller
     {
         private readonly ICarRepository _carRepository;
+        private readonly IFooHelper _fooHelper;
 
-        public CarsController(ICarRepository carRepository)
+        public CarsController(ICarRepository carRepository,
+            IFooHelper fooHelper)
         {
             _carRepository = carRepository;
+            _fooHelper = fooHelper;
         }
 
         // GET api/cars
