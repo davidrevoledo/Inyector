@@ -43,6 +43,11 @@ namespace Inyector.Attributes
             AbstractType = abstractType;
         }
 
+        public InyectAttribute()
+        {
+            
+        }
+
         /// <summary>
         ///     Constructor with declared mode
         /// </summary>

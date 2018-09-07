@@ -67,14 +67,16 @@ namespace Inyector
                 if (!(attribute is InyectAttribute))
                     continue;
 
-                var inyectAttribute = (InyectAttribute) attribute;
+                var inyectAttribute = (InyectAttribute)attribute;
 
                 var mode = inyectAttribute.Mode ?? Mode.DefaultMode;
 
                 // get the target mode 
                 var targetMode = InyectorContext.Modes[mode];
 
-                targetMode?.InyectorMethod?.Invoke(type, inyectAttribute.AbstractType);
+                // configure the target or the type itself
+                targetMode?.InyectorMethod?.Invoke(type,
+                    inyectAttribute.AbstractType ?? type);
             }
         }
 
