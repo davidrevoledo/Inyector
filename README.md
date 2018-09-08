@@ -1,12 +1,14 @@
 # Inyector
 
-What is Injector?
+What inyector is ? 
 
-Injector is a library for auto configure our dependencies regardless of the technology we use, that is, ***it is not*** a dependency injection engine.
+Injector is a very simple tool that allow application that use Microsoft DI inyection to auto configure things.
+
+***This Library Is NOT*** a dependency injection engine.
 
 It is simply an abstraction layer to configure our objects no matter what technology we use as an injection engine.
 
-You can use Injector with your favorite libraries like Asp.Net Core DI, Autofac, Ninject and others ...
+You can use Injector with your favorites libraries like Asp.Net Core DI, Autofac, Ninject and others ...
 
 [![CodeFactor](https://www.codefactor.io/repository/github/davidrevoledo/inyector/badge)](https://www.codefactor.io/repository/github/davidrevoledo/inyector)
 
@@ -19,7 +21,7 @@ paket add Inyector --version 0.1.1
 ```
 
 ### How to use
-           -  Scan (You declare the assemblies to execute Inyector)
+           -  Scan (Allow you to declare what assemblies Inyector need to listen to apply the rules, this is made to avoid processing all the referenced assmeblies)
 ```c#
            c.Scan(typeof(Startup).Assembly)
 ```    
@@ -56,7 +58,14 @@ paket add Inyector --version 0.1.1
                {
                }
 ```    
-            
+   
+```c#
+               [Inyect]
+               public class CarHelper 
+               {
+               }
+```    
+   
 ```c#
                [Inyect(typeof(IFooHelper), mode : "MyCustomMode")]
                public class CarHelper : IFooHelper
@@ -90,7 +99,7 @@ Also you can define your owns.
 ```
 
 #### Raw
-To use injector directly you should call the ```C# InyectorStartup ``` class like this :
+To use injector directly you have call ```C# InyectorStartup ``` class like this :
 ```c#
 InyectorStartup.Init(c =>
             {
