@@ -20,7 +20,7 @@ Grab the latest Inyector NuGet package and install in your solution. https://www
 ```sh
 PM > Install-Package Inyector 
 NET CLI - dotnet add package Inyector 
-paket add Inyector --version 0.1.1	
+paket add Inyector --version 1.2
 ```
 
 ### How to use
