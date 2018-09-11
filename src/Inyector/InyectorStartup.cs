@@ -44,10 +44,9 @@ namespace Inyector
 
             // init the context
             InyectorContext.Assemblies = configuration.Assemblies;
+
             foreach (var mode in configuration.Modes)
-            {
                 InyectorContext.Modes[mode.Name] = mode;
-            }
 
             InyectorEngine.Proccess(configuration);
         }

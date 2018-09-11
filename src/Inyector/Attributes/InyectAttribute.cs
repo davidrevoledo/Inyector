@@ -43,9 +43,11 @@ namespace Inyector.Attributes
             AbstractType = abstractType;
         }
 
+        /// <summary>
+        ///     Default constuctor where the target it the same class
+        /// </summary>
         public InyectAttribute()
         {
-            
         }
 
         /// <summary>
