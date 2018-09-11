@@ -1,22 +1,21 @@
 ﻿using System;
-using Microsoft.Extensions.DependencyInjection;
-using Inyector.Configurations;
 using Inyector;
 using Inyector.AspNetCore;
+using Inyector.Configurations;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Microsoft.Extensions
 {
     /// <summary>
-    /// AspNet Core Service Extension
+    ///     AspNet Core Service Extension
     /// </summary>
     public static class InyectorExtensions
     {
         public static IServiceCollection UseInjector(this IServiceCollection services,
             Action<InyectorConfiguration> configurationAction)
         {
-
             // Call Inyector Startup
-            InyectorStartup.Init((c) =>
+            InyectorStartup.Init(c =>
             {
                 // add default modes
                 c.AddMode(AspNetCoreModeFactory.Create(ServiceLifetime.Scoped, services))

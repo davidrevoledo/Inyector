@@ -24,6 +24,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using Inyector.Attributes;
 using Inyector.Configurations;
@@ -53,16 +54,19 @@ namespace Inyector
             if (!InyectorContext.Modes.Any())
                 return;
 
-            var autoInyectedObjects = InyectorContext.ScanedTypes.Where(t => !t.IsInterface &&
-                                                                             !t.IsAbstract &&
-                                                                             t.GetCustomAttributes(
-                                                                                     typeof(InyectAttribute),
-                                                                                     true)
-                                                                                 .Any());
-            foreach (var type in autoInyectedObjects)
+            var autoInyectedObjects = InyectorContext.ScanedTypes.Where(
+                t => !t.IsInterface &&
+                     !t.IsAbstract &&
+                     t.GetCustomAttributes(
+                             typeof(InyectAttribute),
+                             true)
+                         .Any());
+
+            foreach (var candidate in autoInyectedObjects)
             {
                 // get the attribute to get the meta data to inyect the object
-                var attribute = type.GetCustomAttributes(typeof(InyectAttribute), true).FirstOrDefault();
+                var attribute = candidate.GetCustomAttributes(typeof(InyectAttribute), true)
+                    .FirstOrDefault();
 
                 if (!(attribute is InyectAttribute))
                     continue;
@@ -73,10 +77,12 @@ namespace Inyector
 
                 // get the target mode 
                 var targetMode = InyectorContext.Modes[mode];
+                var target = inyectAttribute.AbstractType ?? candidate;
 
                 // configure the target or the type itself
-                targetMode?.InyectorMethod?.Invoke(type,
-                    inyectAttribute.AbstractType ?? type);
+                targetMode?.InyectorMethod?.Invoke(candidate, target);
+
+                TraceInyectOperation(configuration, candidate, target, mode);
             }
         }
 
@@ -89,44 +95,72 @@ namespace Inyector
             foreach (var rule in configuration.Rules.AsParallel())
             {
                 // the target types to find
-                var target = new List<Type>();
+                var targets = new List<Type>();
 
                 // add the assembly types
                 if (rule.Assembly != null)
-                    target.AddRange(rule.Assembly.GetTypes());
+                    targets.AddRange(rule.Assembly.GetTypes());
 
                 // add the scanned assemblies
-                target.AddRange(InyectorContext.ScanedTypes);
+                targets.AddRange(InyectorContext.ScanedTypes);
 
                 // get interfaces to try match
-                var interfaces = target.Where(t => t.IsInterface &&
-                                                   !t.GetCustomAttributes(typeof(AvoidInyectorAttribute), true).Any());
+                var interfaces = targets.Where(
+                    t => t.IsInterface &&
+                         !t.GetCustomAttributes(typeof(AvoidInyectorAttribute), true).Any());
 
                 // get the candidates types to check the criteria logic
-                var candidates = target.Where(t => !t.IsInterface &&
-                                                   !t.IsAbstract &&
-                                                   !t.GetCustomAttributes(typeof(AvoidInyectorAttribute), true).Any())
-                    .ToList();
+                var candidates = targets.Where(
+                    t => !t.IsInterface &&
+                         !t.IsAbstract &&
+                         !t.GetCustomAttributes(typeof(AvoidInyectorAttribute), true).Any());
 
-                foreach (var @interface in interfaces)
+                foreach (var target in interfaces)
                 {
-                    var candidate = candidates.FirstOrDefault(c => rule.Criteria(c, @interface));
+                    var candidate = candidates.FirstOrDefault(c => rule.Criteria(c, target));
 
                     if (candidate == null)
                         continue;
 
                     // find method or mode to execute the inyection
                     var method = rule.InyectorMethod;
+                    var methodName = string.Empty;
 
                     if (method == null)
                     {
-                        InyectorContext.Modes.TryGetValue(rule.InyectorMode, out Mode mode);
+                        InyectorContext.Modes.TryGetValue(rule.InyectorMode, out var mode);
+                        methodName = mode?.ToString();
                         method = mode?.InyectorMethod;
                     }
 
-                    method?.Invoke(candidate, @interface);
+                    method?.Invoke(candidate, target);
+                    TraceInyectOperation(configuration, candidate, target, methodName);
                 }
             }
+        }
+
+        /// <summary>
+        ///     Trace inyect operations
+        /// </summary>
+        /// <param name="configuration"></param>
+        /// <param name="type"></param>
+        /// <param name="targetType"></param>
+        /// <param name="mode"></param>
+        private static void TraceInyectOperation(InyectorConfiguration configuration, Type type, Type targetType,
+            string mode)
+        {
+            if (!configuration.EnableTracing)
+                return;
+
+            //  trace inyector activity
+            var tracing = configuration.Log ??
+                          ((from, target) =>
+                          {
+                              Trace.TraceInformation(
+                                  $"Injector : registering from {type} to {targetType} with {mode} Mode");
+                          });
+
+            tracing.Invoke(type, targetType);
         }
     }
 }
