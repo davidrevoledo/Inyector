@@ -1,4 +1,5 @@
-﻿using Inyector;
+﻿using System.Diagnostics;
+using Inyector;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -30,7 +31,11 @@ namespace AspNetWebAppSample
 
                 c.Scan(typeof(Startup).Assembly)
                     .AddRuleForNamingConvention(Mode.DefaultMode)
-                    .AddRuleForEndsWithNamingConvention(new[] {"Helper", "Services", "Foo"}, "MyCustomMode");
+                    .AddRuleForEndsWithNamingConvention(new[] { "Helper", "Services", "Foo" }, "MyCustomMode");
+
+                c.EnableTracing = true;
+                c.Log = (type, type1) 
+                    => Trace.TraceInformation($"Custom Log Injector : registering from {type} to {type1}");
             });
         }
 

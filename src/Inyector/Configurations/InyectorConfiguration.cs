@@ -30,9 +30,34 @@ namespace Inyector.Configurations
 {
     public class InyectorConfiguration
     {
+        public InyectorConfiguration()
+        {
+
+// default tracing configuration
+#if !RELEASE
+            EnableTracing = false;
+#else
+            EnableTracing = true;
+#endif
+        }
+
         internal List<Assembly> Assemblies = new List<Assembly>();
+
         internal List<Rule> Rules { get; set; } = new List<Rule>();
+
         internal List<Mode> Modes { get; set; } = new List<Mode>();
+
+        /// <summary>
+        ///     Log to trace what is being injected in the app
+        ///     Default is Trace
+        /// </summary>
+        public Action<Type, Type> Log { get; set; }
+
+        /// <summary>
+        ///     If is debug mode is true otherwise it default false
+        ///     This should execute the Log method
+        /// </summary>
+        public bool EnableTracing { get; set; }
 
         /// <summary>
         ///     Add New Rule with target assembly
