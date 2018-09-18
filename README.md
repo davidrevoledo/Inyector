@@ -14,6 +14,7 @@ You can use Injector with your favorites libraries like Asp.Net Core DI, Autofac
 [![Build status](https://ci.appveyor.com/api/projects/status/j7f6vfv3s4nwwak6?svg=true)](https://ci.appveyor.com/project/davidrevoledo/inyector)
 ![NuGet](https://img.shields.io/nuget/dt/Inyector.svg)
 ![NuGet](https://img.shields.io/nuget/v/Inyector.svg)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 
 ### Installation
