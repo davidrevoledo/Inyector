@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="inyector.jpg" alt="Inyector" width="100"/>
+</p>
+
 # Inyector
 
 What inyector is ? 
