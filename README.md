@@ -126,5 +126,4 @@ Inyector is licensed under the MIT License
 ### Development
 Want to contribute? Great!
 
-
-
+Made with ❤ in [DGENIX](https://www.dgenix.com/)
