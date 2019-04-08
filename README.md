@@ -6,7 +6,7 @@
 
 What inyector is ? 
 
-Injector is a very simple tool that allow application that use Microsoft DI inyection to auto configure things.
+Injector is a very simple tool that allow application that use Microsoft DI injection to auto configure things.
 
 ***This Library Is NOT*** a dependency injection engine.
 
